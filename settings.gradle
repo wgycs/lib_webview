@@ -1,0 +1,3 @@
+rootProject.name='WebviewSample'
+include ':app'
+include ':library_webview'

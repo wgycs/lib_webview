@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--屏幕适配：viewport-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <script src="js/jquery.min.js"></script>
+    <title>js和android通信</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font: 400 14px/1.5 Tahoma,"Lucida Grande",Verdana,"Microsoft Yahei",STXihei,hei;
+        }
+
+        button{
+            border-style: none;
+            width: 94%;
+            border-radius: 8px;
+            background-color: #28daff;
+            margin-top: 10px;
+            margin-left: 3%;
+            margin-right: 3%;
+            height: 42px;
+            font-size: 18px;
+            color: white;
+        }
+
+        button:active{
+            background-color: #18b0ff;
+        }
+    </style>
+</head>
+<body>
+
+    <button id="btn1">JS消息1</button>
+    <button id="btn2">JS消息2</button>
+    <button id="btn3">JS消息3</button>
+
+<script>
+
+    var action = "";//分发动作：该参数为了便于android统一管理所有方法，具体看android代码
+
+    $("#btn1").on("click", function(){
+        console.log("callphone");
+        var method = "send";//js调用的android方法名
+        action = "callPhone";//打电话动作
+        var params = {
+                 "identity":"registSuccess",
+                 "type":1,/*0:Native to H5; 1:H5 to Native*/
+                    "data":{
+                        "userName":"liz",
+                        "passWord":"135790"
+                    }
+}
+        callAndroidMethod(method, params);
+    });
+
+    $("#btn2").on("click", function(){
+        console.log("share2QQ");
+        action = "share2QQ";
+        var params = {
+            "identity":"initPage",
+            "type":1,/*0:Native to H5; 1:H5 to Native*/
+            "data":{
+                    "clientVersion":"客户端版本号",
+                    "clientSource":"客户端来源",
+                    "agentCode":"渠道码"
+                }
+        };
+        var method = "send";//js调用的android方法名
+        callAndroidMethod(method, params);
+    });
+
+    $("#btn3").on("click", function(){
+        //页面跳转
+        //location.href = "orderDetail.html";
+          var params ={
+            "identity":"registSuccess",
+            "type":1,/*0:Native to H5; 1:H5 to Native*/
+            "data":{
+                    "clientVersion":"555533",
+                    "client":"goooooooooood"
+                }
+        }
+        var method = "send";//js调用的android方法名
+        callAndroidMethod(method, params);
+    });
+
+    /**
+     * 统一管理js调用安卓方法
+     * @param method 方法名
+     * @param params 参数 数组格式
+     */
+    var callAndroidMethod = function(method, params){
+        window.Android.nativeMessageHandle(JSON.stringify(params));//json对象转成字符串，再转成字符串数组
+    }
+
+    function PageMessageHandle(json){
+       console.log("PageMessageHandle" + json );
+    }
+
+</script>
+</body>
+
+</html>

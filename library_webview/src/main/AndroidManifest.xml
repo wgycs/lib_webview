@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.wgycs.webview">
+
+    <application>
+        <service
+            android:name="com.wgycs.webview.service.MainProcessWebService"/>
+
+        <!--预加载进程-->
+        <service
+            android:name="com.wgycs.webview.service.PreLoadingWebService"
+            android:process=":h5"/>
+
+        <activity
+            android:name="com.wgycs.webview.WebViewActivity"
+            android:process=":h5">
+        </activity>
+        <activity
+            android:name="com.wgycs.webview.WebDialogStyleActivity"
+            android:theme="@style/activity_dialog_style"
+            android:process=":h5">
+        </activity>
+    </application>
+
+</manifest>
